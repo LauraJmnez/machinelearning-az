@@ -1,4 +1,4 @@
-# Data Preprocessing
+# Data Preprocessing Template - Datos categóricos
 
 # Importing the dataset
 dataset = read.csv('Data.csv')

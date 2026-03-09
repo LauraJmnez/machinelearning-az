@@ -1,0 +1,13 @@
+Los modelos de regresión (lineal y no lineal) se utilizan mucho para predecir
+valores numéricos como por ejemplo el sueldo. 
+Si nuestra variable independiente es tiempo entonces podemos hacer predicciones 
+de valores futuros. Sin embargo, nuestro modelo puede predecir también valores
+desconocidos del presente.
+
+REGRESIÓN LINEAL SIMPLE
+De todas las rectas lineales posibles (pasando o no por todos los puntos), 
+cuál es la recta que mejor se ajusta a nuestros datos (Los puntos por los que 
+no pase, deben estar lo menos separados posible)
+En el Eje X representaremos los valores independientes (años de experiencia) y
+el modelo nos va a predecir el sueldo esperado de algún empleado en función de
+su experiencia

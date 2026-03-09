@@ -1,0 +1,3 @@
+Lo más cómo para gestionar el preprocesado de datos es separar en diferentes
+scripts lo que vamos a tener que hacer siempre y en otros scrips el tratamiento
+de Nas y el tratamiento de datos categóricos.
