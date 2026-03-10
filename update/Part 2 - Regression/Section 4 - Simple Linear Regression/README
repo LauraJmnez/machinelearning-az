@@ -11,3 +11,13 @@ no pase, deben estar lo menos separados posible)
 En el Eje X representaremos los valores independientes (años de experiencia) y
 el modelo nos va a predecir el sueldo esperado de algún empleado en función de
 su experiencia
+
+En estadística, se llama análisis de regresión al proceso estadístico de estimar
+las relaciones que existenentre variables. Por tanto se centra en estudiar las
+relaciones entre una variable DEPENDIENTE y más variables independientes.
+
+Las regresiones se clasifican en:
+    - LINEAL : Regresión Lineal Simple (solo una variable independiente) y Regresión
+    Lineal Múltiple (más de una variable independiente)
+    - LOGÍSTICA : Regresión Logística Simple (se intenta predecir con una sola variable
+    independiente) y la Regresión Logística Múltiple (hay diversas variables independientes)
