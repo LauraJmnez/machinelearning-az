@@ -1,4 +1,5 @@
-# Plantilla de Clasificación 
+
+# SVM (Linear)
 
 dataset = read.csv('Social_Network_Ads.csv')
 dataset = dataset[, 3:5]
@@ -16,11 +17,14 @@ training_set[,1:2] = scale(training_set[,1:2])
 testing_set[,1:2] = scale(testing_set[,1:2])
 
 
-## Ajustar el clasificador con el conjunto de entrenamiento
+## Ajustar el SVM con el conjunto de entrenamiento
 
-  # Crear el modelo de clasificación
+library(e1071)
 
-
+classifier = svm(formula = Purchased ~ ., 
+                 data = training_set, 
+                 type = "C-classification",
+                 kernel = "linear")
 
 
 
@@ -40,7 +44,7 @@ X2 = seq(min(set[, 2]) - 1, max(set[, 2]) + 1, by = 0.01)
 grid_set = expand.grid(X1, X2)
 colnames(grid_set) = c('Age', 'EstimatedSalary')
 y_grid = predict(classifier, newdata = grid_set)
-plot(set[, -3], main = 'Clasificación (Conjunto de Training)',
+plot(set[, -3], main = 'SVM (Conjunto de Training)',
      xlab = 'Edad', ylab = 'Sueldo Estimado', 
      xlim =range(X1), ylim = range(X2))
 contour(X1, X2, matrix(as.numeric(y_grid), length(X1), length(X2)), 
@@ -56,7 +60,7 @@ X2 = seq(min(set[, 2]) - 1, max(set[, 2]) + 1, by = 0.01)
 grid_set = expand.grid(X1, X2)
 colnames(grid_set) = c('Age', 'EstimatedSalary')
 y_grid = predict(classifier, newdata = grid_set)
-plot(set[, -3], main = 'Clasificación (Conjunto de Testing)',
+plot(set[, -3], main = 'SVM (Conjunto de Testing)',
      xlab = 'Edad', ylab = 'Sueldo Estimado', 
      xlim =range(X1), ylim = range(X2))
 contour(X1, X2, matrix(as.numeric(y_grid), length(X1), length(X2)), 
