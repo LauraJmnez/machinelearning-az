@@ -35,6 +35,7 @@ y = dataset.iloc[:, -1].values  # Tomar la etiqueta (si el cliente se fue o no)
 print(X)
 print(y)
 
+
 # Codificación de los datos categóricos
 # Codificación de la columna "Gender" (Género) con LabelEncoder
 from sklearn.preprocessing import LabelEncoder
@@ -48,39 +49,64 @@ from sklearn.preprocessing import OneHotEncoder
 ct = ColumnTransformer(transformers=[('encoder', OneHotEncoder(), [1])], remainder='passthrough')
 X = np.array(ct.fit_transform(X))  # Aplicar la codificación one-hot para "Geography"
 print(X)
+X = X[:, 1:] # Evita la trampa de la multicolinialidad (si no es ni español, ni aleman, es francés)
+
 
 # Dividir el dataset en conjunto de entrenamiento y prueba
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0)
 
+
 # Escalado de las características
+## En Redes Neuronales es obligatorio escalar variables
 from sklearn.preprocessing import StandardScaler
 sc = StandardScaler()
 X_train = sc.fit_transform(X_train)  # Escalar el conjunto de entrenamiento
 X_test = sc.transform(X_test)  # Escalar el conjunto de prueba
 
+
+
 # Parte 2 - Construcción de la Red Neuronal Artificial (ANN)
 
+#Importar Keras y librerías adicionales
+import keras
+from keras.models import Sequential
+from keras.layers import Dense
+
+
 # Inicializando la red neuronal (ANN)
-ann = tf.keras.models.Sequential()
+# ann = tf.keras.models.Sequential()
+classifier = Sequential()
 
 # Añadir la capa de entrada y la primera capa oculta
-ann.add(tf.keras.layers.Dense(units=6, activation='relu'))
+# ann.add(tf.keras.layers.Dense(units=6, activation='relu'))
+# 11+1 =12/2 = 6
+classifier.add(Dense(units=6, kernel_initializer = 'uniform', 
+                     activation='relu', input_dim = 11))
 
 # Añadir la segunda capa oculta
-ann.add(tf.keras.layers.Dense(units=6, activation='relu'))
+# ann.add(tf.keras.layers.Dense(units=6, activation='relu'))
+classifier.add(Dense(units=6, kernel_initializer = 'uniform', 
+                     activation='relu'))
 
 # Añadir la capa de salida
-ann.add(tf.keras.layers.Dense(units=1, activation='sigmoid'))
+# ann.add(tf.keras.layers.Dense(units=1, activation='sigmoid'))
+classifier.add(Dense(units=1, kernel_initializer = 'uniform', 
+                     activation='sigmoid'))
 
 # Parte 3 - Entrenamiento de la Red Neuronal Artificial (ANN)
 
 # Compilando la red neuronal
-ann.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
+# ann.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
+classifier.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
 
 # Entrenando la red neuronal con el conjunto de entrenamiento
-ann.fit(X_train, y_train, batch_size = 32, epochs = 100)
-
+# ann.fit(X_train, y_train, batch_size = 32, epochs = 100)
+classifier.fit(X_train, y_train, batch_size = 10, epochs = 100)
+"""
+procesa 10 elementos y corrige lospesos
+Resultado: De cada 100 iteracciones hará un 83% de buena predicción
+"""
 # Parte 4 - Predicción y Evaluación del Modelo
 
 # Predicción del resultado para una observación individual
@@ -112,7 +138,8 @@ Nota importante 2: Además, observa que el país "Francia" no se introdujo como 
 """
 
 # Predicción de los resultados para el conjunto de prueba
-y_pred = ann.predict(X_test)
+#y_pred = ann.predict(X_test)
+y_pred = classifier.predict(X_test)
 y_pred = (y_pred > 0.5)  # Convertir las predicciones a 0 o 1
 print(np.concatenate((y_pred.reshape(len(y_pred), 1), y_test.reshape(len(y_test), 1)), 1))  # Comparar predicciones con los valores reales
 
